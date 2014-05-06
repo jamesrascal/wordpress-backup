@@ -3,10 +3,10 @@
 # WP BACKUPS V1.7
 # Build date 04/18/2014
 
-#Adjust this to where you websites are stored.
+# Adjust this to where you websites are stored.
 FINDDIR=/home/
 
-#Searches for the backup.profile in the web directory.
+# earches for the backup.profile in the web directory.
 profile=$(find ${FINDDIR} -inname "*backup.profile" )
 
 for backupprofile in $profile ; do
