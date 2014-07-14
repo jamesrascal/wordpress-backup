@@ -1,13 +1,13 @@
 #!/bin/bash
 # Author Roger Gentry (jamesrascal) - Host Kraken
-# WP BACKUPS V1.7
-# Build date 04/18/2014
+# WP BACKUPS V1.8
+# Build date 07/14/2014
 
 # Adjust this to where you websites are stored.
 FINDDIR=/home/
 
 # Searches for the backup.profile in the web directory.
-profile=$(find ${FINDDIR} -inname "*backup.profile" )
+profile=$(find ${FINDDIR} -wholename "*backup.profile" )
 
 for backupprofile in $profile ; do
 echo "********************************************************************";
@@ -32,7 +32,7 @@ echo "Using Profile: ${backupprofile}";
                                 tar zcPf ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${wp_root}
 
                                 # Compresses the MySQL Dump and the Home Directory
-                                tar zcPf ${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${bulocation}/${user}/${wpdomain}/${backupname}.sql
+                                tar zcPf ${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.sql
 
                                 # Generates the Backup Size
                                 FILENAME=${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz
@@ -40,7 +40,7 @@ echo "Using Profile: ${backupprofile}";
                                 echo "$FILESIZE"
 
                                 #Removes the SQL dump and Home DIR to conserve space
-                                rm -rf ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${bulocation}/${user}/${wp_domain}/${backupname}.sql
+                                rm -rf ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.sql
 
                                 #Deletes any Backup older than X days
                               find ${backup_location}/${user}/${wp_domain}/ -type f -mtime +${keepdays} -exec rm {} \;
