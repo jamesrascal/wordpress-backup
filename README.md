@@ -11,7 +11,7 @@ Features:
 - Can be set on a cron job.
 
 
-You currently need to scripts downloaded to the server.
+You currently need two scripts downloaded to the server.
 
 1. WordPressBackup.sh
 2. Backup.profile
