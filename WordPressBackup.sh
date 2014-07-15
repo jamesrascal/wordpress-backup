@@ -26,13 +26,17 @@ echo "Using Profile: ${backupprofile}";
                                 # Creates a Backup Directory if one does not exist.
                                 mkdir -p ${backup_location}/${user}/
                                 mkdir -p ${backup_location}/${user}/${wp_domain}/
+                                
+                                # Make Backup location the current directory
+                                cd ${backup_location}/${user}/${wp_domain}
+
 
                                 # MySQL Takes a Dump and compress the Home Directory
-                                mysqldump -u ${db_user} -p${db_pass} ${db_name} > ${backup_location}/${user}/${wp_domain}/${backupname}.sql &&
-                                tar zcPf ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${wp_root}
+                                mysqldump -u ${db_user} -p${db_pass} ${db_name} > ./${backupname}.sql &&
+                                tar zcPf ./${backupname}.tar.gz ${wp_root}
 
                                 # Compresses the MySQL Dump and the Home Directory
-                                tar zcPf ${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.sql
+                                tar zcPf ./WPBACKUP-${backupname}.tar.gz ./${backupname}.tar.gz ./${backupname}.sql
 
                                 # Generates the Backup Size
                                 FILENAME=${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz
@@ -40,7 +44,7 @@ echo "Using Profile: ${backupprofile}";
                                 echo "$FILESIZE"
 
                                 #Removes the SQL dump and Home DIR to conserve space
-                                rm -rf ${backup_location}/${user}/${wp_domain}/${backupname}.tar.gz ${backup_location}/${user}/${wp_domain}/${backupname}.sql
+                                rm -rf ./${backupname}.tar.gz ./${backupname}.sql
 
                                 #Deletes any Backup older than X days
                               find ${backup_location}/${user}/${wp_domain}/ -type f -mtime +${keepdays} -exec rm {} \;
