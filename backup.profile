@@ -12,9 +12,6 @@ wp_domain=example.com
 # Directory that WordPress is installed at
 wp_root=/home/admin/example.com/public_html
 
-# Path to wp-config.php Allows support of keeping WP-Config in another directory.
-wp_config=/home/admin/example/public_html/wp-config.php
-
 # Backup location
 backup_location=/backups
 
