@@ -15,7 +15,7 @@ echo "Using Profile: ${backupprofile}";
 . $backupprofile
                 if [ "${backup_enabled}" = "1" ]; then
                                 # BackupName Date and time
-                                backupname=$(date +%m%d%y)
+                                backupname=$wp_domin-$(date +%m%d%y)
                                 echo "Backing up WordPress site at ${wp_root}";
                                 # Pulls Database info from WP-config
                                 db_name=$(grep DB_NAME "${wp_root}/wp-config.php" | cut -f4 -d"'")
@@ -32,8 +32,8 @@ echo "Using Profile: ${backupprofile}";
 
 
                                 # MySQL Takes a Dump and compress the Home Directory
-                                mysqldump -u ${db_user} -p${db_pass} ${db_name} > ./${backupname}.sql &&
-                                tar zcPf ./${backupname}.tar.gz ${wp_root}
+                                mysqldump -u ${db_user} -p${db_pass} ${db_name} > ./${backupname}-DB.sql &&
+                                tar zcPf ./${backupname}-FILES.tar.gz ${wp_root}
 
                                 # Compresses the MySQL Dump and the Home Directory
                                 tar zcPf ./WPBACKUP-${backupname}.tar.gz ./${backupname}.tar.gz ./${backupname}.sql
