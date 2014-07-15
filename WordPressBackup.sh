@@ -15,7 +15,7 @@ echo "Using Profile: ${backupprofile}";
 . $backupprofile
                 if [ "${backup_enabled}" = "1" ]; then
                                 # BackupName Date and time
-                                backupname=$wp_domin-$(date +%m%d%y)
+                                backupname=${wp_domin}-$(date +%m%d%y)
                                 echo "Backing up WordPress site at ${wp_root}";
                                 # Pulls Database info from WP-config
                                 db_name=$(grep DB_NAME "${wp_root}/wp-config.php" | cut -f4 -d"'")
