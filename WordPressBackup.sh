@@ -62,7 +62,7 @@ echo "Using Profile: ${backupprofile}";
                                 echo "$FILESIZE"
 
                                 #Removes the SQL dump and Home DIR to conserve space
-                                rm -rf ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql
+                                rm -rf ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql.gz
 
                                 #Deletes any Backup older than X days
                               find ${backup_location}/${user}/${wp_domain}/ -type f -mtime +${keepdays} -exec rm {} \;
