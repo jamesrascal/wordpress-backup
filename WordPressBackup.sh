@@ -15,7 +15,7 @@ echo "Using Profile: ${backupprofile}";
 . $backupprofile
                 if [ "${backup_enabled}" = "1" ]; then
                                 # BackupName Date and time
-                                backupname=${wp_domin}-$(date +%m%d%y)
+                                backupname=$(date +%m%d%y)
                                 echo "Backing up WordPress site at ${wp_root}";
                                 # Pulls Database info from WP-config
                                 db_name=$(grep DB_NAME "${wp_root}/wp-config.php" | cut -f4 -d"'")
@@ -36,10 +36,10 @@ echo "Using Profile: ${backupprofile}";
                                 tar zcPf ./${backupname}-FILES.tar.gz ${wp_root}
 
                                 # Compresses the MySQL Dump and the Home Directory
-                                tar zcPf ./WPBACKUP-${backupname}.tar.gz ./${backupname}.tar.gz ./${backupname}.sql
+                                tar zcPf ./${wp_domain}-${backupname}.tar.gz ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql
 
                                 # Generates the Backup Size
-                                FILENAME=${backup_location}/${user}/${wp_domain}/WPBACKUP-${backupname}.tar.gz
+                                FILENAME=${backup_location}/${user}/${wp_domain}/${wp_domain}-${backupname}.tar.gz
                                 FILESIZE=$(du -h "$FILENAME")
                                 echo "$FILESIZE"
 
