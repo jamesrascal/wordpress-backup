@@ -55,7 +55,8 @@ echo "Using Profile: ${backupprofile}";
 
                                 # Compresses the MySQL Dump and the Home Directory
                                 tar zcPf ./${wp_domain}-${backupname}.tar.gz ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql.gz
-
+				chmod 600 ./${wp_domain}-${backupname}.tar.gz
+				
                                 # Generates the Backup Size
                                 FILENAME=${backup_location}/${user}/${wp_domain}/${wp_domain}-${backupname}.tar.gz
                                 FILESIZE=$(du -h "$FILENAME")
