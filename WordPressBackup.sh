@@ -3,15 +3,38 @@
 # WP BACKUPS V1.9
 # Build date 07/14/2014
 
+# Parse flags
+quiet=0
+while getopts ":hq" opt; do
+        case ${opt} in
+                h )
+                        echo "Usage:"
+                        echo "    WordPressBackup.sh -h       Display this help message."
+                        echo "    WordPressBackup.sh -q       Run quietly-output only on errors."
+                        exit 0
+                ;;
+                q )
+                        quiet=1
+                ;;
+                \? )
+                        echo "Invalid Option: -$OPTARG" 1>&2
+                        exit 1
+                ;;
+        esac
+done
+shift $((OPTIND -1))
+
 # Path where backup profiles are stored
-FINDDIR=/home/
+FINDDIR=/home/centos/backups/profiles/
 
 # Searches for the backup.profile 
 profile=$(find ${FINDDIR} -wholename "*backup.profile" )
 
 for backupprofile in $profile ; do
-	echo "********************************************************************";
-	echo "Using Profile: ${backupprofile}";
+	if [ "${quiet}" = "0" ]; then
+		echo "********************************************************************";
+		echo "Using Profile: ${backupprofile}";
+	fi
 	. $backupprofile
                 
 	if [ "${backup_enabled}" = "1" ]; then
@@ -33,7 +56,7 @@ for backupprofile in $profile ; do
 		# Verifing wp_config exists
 		if [ -f "$wp_config" ]; then
 			# BackupName Date and time
-			backupname=$(date +%m%d%y)
+			backupname=$(date +%Y-%m-%d)
 
 			# Pulls Database info from WP-config
 			db_name=$(grep DB_NAME "${wp_config}" | cut -f4 -d"'")
@@ -42,7 +65,6 @@ for backupprofile in $profile ; do
 			table_prefix=$(grep table_prefix "${wp_config}" | cut -f2 -d"'")
 
 			# Creates a Backup Directory if one does not exist.
-			mkdir -p ${backup_location}/${user}/
 			mkdir -p ${backup_location}/${user}/${wp_domain}/
 
 			# Make Backup location the current directory
@@ -59,7 +81,9 @@ for backupprofile in $profile ; do
 			# Generates the Backup Size
 			FILENAME=${backup_location}/${user}/${wp_domain}/${wp_domain}-${backupname}.tar.gz
 			FILESIZE=$(du -h "$FILENAME")
-			echo "$FILESIZE"
+			if [ "${quiet}" = "0" ]; then
+				echo "$FILESIZE"
+			fi
 
 			#Removes the SQL dump and Home DIR to conserve space
 			rm -rf ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql.gz
@@ -74,7 +98,9 @@ for backupprofile in $profile ; do
 	fi
 done
 
-echo " ";
-echo "********************************************************************";
-echo "This script is licensed under GPL https://github.com/jamesrascal/wordpress-backup/";
-echo "Run Date: $(date +%m%d%y%k%M)";
+if [ "${quiet}" = "0" ]; then
+	echo " ";
+	echo "********************************************************************";
+	echo "This script is licensed under GPL https://github.com/jamesrascal/wordpress-backup/";
+	echo "Run Date: $(date +%Y-%m-%d-%k-%M)";
+fi
