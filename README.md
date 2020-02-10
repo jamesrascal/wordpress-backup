@@ -1,7 +1,7 @@
 WordPress Backup
 ===============
 
-This script is designed to backup any number of WordPress sites without the use of a plugin. 
+This lightweight script is designed to backup any number of WordPress sites without the use of a plugin. 
 
 Features:
 
@@ -11,14 +11,12 @@ Features:
 - Can be set on a cron job.
 
 
-You currently need two scripts downloaded to the server.
+There are 2 parts to this script:
 
 1. WordPressBackup.sh
+    - the main script that does all the heavy lifting.
 2. Backup.profile
-
-WordPressBackup.sh is the main script that does all the heavy lifting.
-Backup.profile is what tells the script which directory to backup and how long to keep those backups.
-
+    - the configuration profile that manages the retention policy
 
 How to use:
 
