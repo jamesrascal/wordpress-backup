@@ -1,7 +1,7 @@
 WordPress Backup
 ===============
 
-This lightweight script is designed to backup any number of WordPress sites without the use of a plugin. 
+This lightweight script is designed to backup any number of WordPress sites without the use of a plugin. This backup script is using tar and bash to acomplish a full backup of your WordPress sites. Multiple sites can be backed up by creating additoinal backup profiles. 
 
 Features:
 
