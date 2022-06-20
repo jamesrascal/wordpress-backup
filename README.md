@@ -10,6 +10,7 @@ Features:
 - Combines SQL Database and Only the WordPress files for easy restores.
 - Can be set on a cron job.
 
+Update: 2022 Works with latest wordpress (Stable release: 6.0 / 24 May 2022)
 
 There are 2 parts to this script:
 
