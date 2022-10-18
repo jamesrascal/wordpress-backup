@@ -62,6 +62,7 @@ for backupprofile in $profile ; do
 			db_name=$(grep DB_NAME "${wp_config}" | cut -f4 -d"'")
 			db_user=$(grep DB_USER "${wp_config}" | cut -f4 -d"'")
 			db_pass=$(grep DB_PASSWORD "${wp_config}" | cut -f4 -d"'")
+			db_host=$(grep DB_HOST "${wp_config}" | cut -f4 -d"'")
 			table_prefix=$(grep table_prefix "${wp_config}" | cut -f2 -d"'")
 
 			# Creates a Backup Directory if one does not exist.
@@ -71,7 +72,7 @@ for backupprofile in $profile ; do
 			cd ${backup_location}/${user}/${wp_domain}
 
 			# MySQL Takes a Dump and compress the Home Directory
-			mysqldump -u ${db_user} -p${db_pass} ${db_name} | gzip > ./${backupname}-DB.sql.gz &&
+			mysqldump -u ${db_user} --host ${db_host}  -p${db_pass} ${db_name} | gzip > ./${backupname}-DB.sql.gz &&
 			tar zcPf ./${backupname}-FILES.tar.gz ${wp_root}
 
 			# Compresses the MySQL Dump and the Home Directory
