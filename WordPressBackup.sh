@@ -65,6 +65,19 @@ for backupprofile in $profile ; do
 			db_host=$(grep DB_HOST "${wp_config}" | cut -f4 -d"'")
 			table_prefix=$(grep table_prefix "${wp_config}" | cut -f2 -d"'")
 
+			# Which files & sub-directories to backup of the root directory
+			if [ "${file_list}" = "" ]; then
+				file_list_bckp =  ${wp_root}
+			else
+				files=(${file_list})
+				file_list_absolute=""
+				for i in "${!files[@]}"
+				do
+				        file_list_absolute="${file_list_absolute} ${wp_root}/${files[i]}";
+				done
+				file_list_bckp=${file_list_absolute}
+			fi
+
 			# Creates a Backup Directory if one does not exist.
 			mkdir -p ${backup_location}/${user}/${wp_domain}/
 
@@ -73,7 +86,7 @@ for backupprofile in $profile ; do
 
 			# MySQL Takes a Dump and compress the Home Directory
 			mysqldump -u ${db_user} --host ${db_host}  -p${db_pass} ${db_name} | gzip > ./${backupname}-DB.sql.gz &&
-			tar zcPf ./${backupname}-FILES.tar.gz ${wp_root}
+			tar zcPf ./${backupname}-FILES.tar.gz ${file_list_bckp}
 
 			# Compresses the MySQL Dump and the Home Directory
 			tar zcPf ./${wp_domain}-${backupname}.tar.gz ./${backupname}-FILES.tar.gz ./${backupname}-DB.sql.gz
