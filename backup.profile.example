@@ -12,6 +12,11 @@ wp_domain=example.com
 # Directory that WordPress is installed at
 wp_root=/home/admin/example.com/public_html
 
+# Optional: backup only these files & directories to be included
+# Example (all WP): wp-* favicon.ico index*
+# Example (only user content): wp-content wp-config*
+file_list="wp-* favicon.ico index*"
+
 # Backup location
 backup_location=/backups
 
